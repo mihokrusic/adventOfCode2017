@@ -1,4 +1,4 @@
-console.log("AdventOfCode 2017 - 02");
+console.log("AdventOfCode 2017 - 03");
 console.log("----------------------");
 
 var input;
