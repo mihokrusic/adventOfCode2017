@@ -36,22 +36,12 @@ describe('Day 2', () => {
 	`;
 
 	describe('Part 1', () => {
-		it('small matrix', () => {
-			assert.equal(18, day02.part_one(smallMatrixPartOne));
-		});
-
-		it('large matrix', () => {
-			assert.equal(42378, day02.part_one(largeMatrix));
-		});
+		it('small matrix', () => assert.equal(18, day02.part_one(smallMatrixPartOne)));
+		it('large matrix', () => assert.equal(42378, day02.part_one(largeMatrix)));
 	});
 
 	describe('Part 2', () => {
-		it('small matrix', () => {
-			assert.equal(9, day02.part_two(smallMatrixPartTwo));
-		});
-
-		it('large matrix', () => {
-			assert.equal(246, day02.part_two(largeMatrix));
-		});
+		it('small matrix', () => assert.equal(9, day02.part_two(smallMatrixPartTwo)));
+		it('large matrix', () => assert.equal(246, day02.part_two(largeMatrix)));
 	});
 });
