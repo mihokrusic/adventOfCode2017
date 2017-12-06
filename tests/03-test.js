@@ -15,11 +15,10 @@ describe('Day 3', () => {
 	});
 
 	describe('Part 2', () => {
-		it('3rd square has value 2',	() => assert.equal(2, day03.part_two(3)));
-		it('7th square has value 11', 	() => assert.equal(11, day03.part_two(7)));
-		it('12th square has value 57',	() => assert.equal(57, day03.part_two(12)));
-		it('18th square has value 304', () => assert.equal(304, day03.part_two(18)));
-		it('23th square has value 806', () => assert.equal(806, day03.part_two(23)));
+		it('First value larger than 120 is 122',	() => assert.equal(122, day03.part_two(120)));
+		it('First value larger than 300 is 304',	() => assert.equal(304, day03.part_two(304)));
+		it('First value larger than 400 is 747',	() => assert.equal(747, day03.part_two(400)));
+		it('First value larger than 368078 is ??',	() => assert.equal(0, day03.part_two(368078)));
 	});
 });
 
