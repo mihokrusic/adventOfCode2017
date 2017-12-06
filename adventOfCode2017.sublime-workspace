@@ -28,13 +28,28 @@
 	"buffers":
 	[
 		{
-			"contents": "const day01 = (input) => {\n\n};\n\nmodule.exports = {\n\t\n}\n\n\nconsole.log(\"AdventOfCode 2017 - 01\");\n\nvar input = '494751136895345894732582362629576539599184296195318162664695189393364372585778868512194863927652788149779748657989318645936221887731542718562643272683862627537378624843614831337441659741281289638765171452576466381314558821636595394981788588673443769343597851883955668818165723174939893841654914556681324133667446412138511724424292394454166623639872425168644336248217213826339741267546823779383343362789527461579565822966859349777937921933694912369552152772735167832762563719664315456987186713541153781499646178238762644186484381142249926194743713139262596264878458636595896487362658672224346241358667234115974528626523648311919886566497837217169673923935143386823757293148719377821517314629812886912412829924484513493885672343964151252433622341141661523814465991516961684511941471572895453711624986269342398786175846925783918686856442684489873327497698963658862856336682422797551251489126661954848572297228765445646745256499679451426358865477844467458533962981852292513358871483321161973583245698763531598395467675529181496911117769834127516441369261275244225978893617456524385518493112272169767775861256649728253754964675812534546226295535939697352141217337346738553495616832783757866928174519145357234834584788253893618549484385733283627199445369658339175644484859385884574943219267922729967571943843794565736975716174727852348441254492886794362934343868643337828637454277582276962353246357835493338372219824371517526474283541714897994127864461433627894831268659336264234436872715374727211764167739169341999573855627775114848275268739159272518673316753672995297888734844388928439859359992475637439771269232916542385876779616695129412366735112593669719335783511355773814685491876721452994714318863716542473187246351548626157775143333161422867924437526253865859969947366972895674966845993244925218766937543487875485647329995285821739359369998935331986126873726737672159265827566443794515755939813676194755474477224152139987944419463371386499841415227734673733555261543871359797796529847861748979527579985757964742667473767269248335229836818297477665453189662485548925521497365877771665365728224394427883312135322325169141784';\n\n\nfunction partOne() {\n\tvar sum = 0;\n\n\tfor (var i = 0; i < input.length; i++) {\n\n\t\tvar nextLocation = (i === input.length - 1 ? 0 : i + 1);\n\t\tif (input[i] === input[nextLocation]) {\n\t\t\tsum += +input[i];\n\t\t}\n\t}\n\n\tconsole.log(\"Part 1 result is \" + sum);\n}\n\nfunction partTwo() {\n\tvar sum = 0;\n\tvar checkAhead = (input.length / 2);\n\n\tfor (var i = 0; i < input.length; i++) {\n\t\tvar nextLocation = (i + checkAhead);\n\t\tif (nextLocation >= input.length)\n\t\t\tnextLocation-=input.length;\n\t\tif (input[i] === input[nextLocation]) {\n\t\t\tsum += +input[i];\n\t\t}\n\t}\n\n\tconsole.log(\"Part 2 result is \" + sum);\n}\n\npartOne();\npartTwo();",
 			"file": "solutions/01.js",
-			"file_size": 2892,
-			"file_write_time": 131570318527838643,
 			"settings":
 			{
-				"buffer_size": 2850,
+				"buffer_size": 613,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "solutions/04.js",
+			"settings":
+			{
+				"buffer_size": 1119,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "solutions/02.js",
+			"settings":
+			{
+				"buffer_size": 1304,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -129,7 +144,9 @@
 	},
 	"expanded_folders":
 	[
-		"/C/_moje/__github/adventOfCode2017"
+		"/C/_moje/__github/adventOfCode2017",
+		"/C/_moje/__github/adventOfCode2017/solutions",
+		"/C/_moje/__github/adventOfCode2017/tests"
 	],
 	"file_history":
 	[
@@ -560,7 +577,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -569,15 +586,44 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2850,
+						"buffer_size": 613,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								51,
-								51
+								18,
+								23
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "solutions/04.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1119,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								781,
+								781
 							]
 						],
 						"settings":
@@ -590,6 +636,35 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "solutions/02.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1304,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								132,
+								132
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1174,7 +1249,7 @@
 		[
 			[
 				"",
-				"C:\\Projects\\insight.cf.sublime-project"
+				"C:\\Projects\\aurora.sublime.sublime-project"
 			]
 		],
 		"width": 380.0

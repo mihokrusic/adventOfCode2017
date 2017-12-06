@@ -10,6 +10,32 @@
         "mocha": "^4.0.1"
     },
     "scripts": {
-      "test": "mocha tests/*-test.js"
+      "test": "mocha tests/*-test.js",
+      "test01": "mocha tests/01-test.js",
+      "test02": "mocha tests/02-test.js",
+      "test03": "mocha tests/03-test.js",
+      "test04": "mocha tests/04-test.js",
+      "test05": "mocha tests/05-test.js",
+      "test06": "mocha tests/06-test.js",
+      "test07": "mocha tests/07-test.js",
+      "test08": "mocha tests/08-test.js",
+      "test09": "mocha tests/09-test.js",
+      "test10": "mocha tests/10-test.js",
+      "test11": "mocha tests/11-test.js",
+      "test12": "mocha tests/12-test.js",
+      "test13": "mocha tests/13-test.js",
+      "test14": "mocha tests/14-test.js",
+      "test15": "mocha tests/15-test.js",
+      "test16": "mocha tests/16-test.js",
+      "test17": "mocha tests/17-test.js",
+      "test18": "mocha tests/18-test.js",
+      "test19": "mocha tests/19-test.js",
+      "test20": "mocha tests/20-test.js",
+      "test21": "mocha tests/21-test.js",
+      "test22": "mocha tests/22-test.js",
+      "test23": "mocha tests/23-test.js",
+      "test24": "mocha tests/24-test.js",
+      "test25": "mocha tests/25-test.js"
+
     }
 }

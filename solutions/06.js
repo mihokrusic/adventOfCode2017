@@ -1,19 +1,8 @@
-console.log("AdventOfCode 2017 - 05");
-console.log("----------------------");
-
-var input;
-
-input = `0	2	7	0`;
-
-input = `2	8	8	5	4	2	3	1	5	5	1	2	15	13	5	14`;
-
-function parseInput() {
-	var temp = input.trim().replace(/\t/g, "*").split("*");
-	temp = temp.map(Number);
-	return temp;
+const parseInput = (input) => {
+	return input.trim().split(/\t/).map(Number);
 }
 
-function getBlockWithMax(blocks) {
+const getBlockWithMax = (blocks) => {
 	var max = null, indexMax = null;
 
 	for (var i = 0; i < blocks.length; i++) {
@@ -25,7 +14,7 @@ function getBlockWithMax(blocks) {
 	return [indexMax, max];
 }
 
-function hashBlocks(blocks) {
+const hashBlocks = (blocks) => {
 	var hash = '';
 	for (var i = 0; i < blocks.length; i++) {
 		hash += blocks[i] + "|";
@@ -33,7 +22,7 @@ function hashBlocks(blocks) {
 	return hash;
 }
 
-function isBlockUnique(history, blockHash) {
+const isBlockUnique = (history, blockHash) => {
 	for (var i = 0; i < history.length; i++) {
 		if (history[i] === blockHash)
 			return i;
@@ -42,9 +31,9 @@ function isBlockUnique(history, blockHash) {
 	return -1;
 }
 
-function solution() {
+const solution = (part1, input) => {
 	var numberOfCycles = 0;
-	var blocks = parseInput();
+	var blocks = parseInput(input);
 	var history = [];
 	history.push(hashBlocks(blocks));
 	while (true) {
@@ -70,8 +59,16 @@ function solution() {
 		history.push(hashBlocks(blocks));
 	}
 
-	console.log("Part 1: " + numberOfCycles);
-	console.log("Part 2: " + (numberOfCycles - isUnique));
+	if (part1)
+		return numberOfCycles
+	else
+		return (numberOfCycles - isUnique);
 }
 
-solution();
+const part_one = (input) => solution(true, input);
+const part_two = (input) => solution(false, input);
+
+module.exports = {
+	part_one: part_one,
+	part_two: part_two
+}
