@@ -1,0 +1,15 @@
+{
+    "name": "adventofcode2017",
+    "version": "1.0.0",
+    "description": "Solution for Advent of Code 2017",
+    "scripts": {},
+    "author": "Miho Krusic",
+    "license": "ISC",
+    "homepage": "https://github.com/mihokrusic/adventOfCode2017#readme",
+    "devDependencies": {
+        "mocha": "^4.0.1"
+    },
+    "scripts": {
+      "test": "mocha tests/*-test.js"
+    }
+}
