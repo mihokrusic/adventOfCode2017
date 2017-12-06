@@ -3,7 +3,7 @@ const part_one = (input) => {
 	var groupExp = 0, groupIx = 0, groupN;
 	while (groupExp < input) {
 		groupIx++;
-		groupN = 1 + 2*groupIx;
+		groupN = 2*groupIx + 1;
 		groupExp = Math.pow(groupN, 2);
 	}
 
@@ -24,32 +24,50 @@ const part_one = (input) => {
 }
 
 const part_two = (input) => {
-	return 0;
+	var steps = 0;
+
+	var ringIx = 0, ringStart = 0, ringEnd = 1, ringSide = 1, distanceToMiddle = 0;
+	var values = [], newValues = [];
+
+	var curr = 0;
+	var currentValue = 0;
+	while (currentValue < input) {
+		curr++;
+		if (curr > ringEnd) {
+			ringIx++;
+			ringSide = (2 * ringIx) + 1;
+			ringStart = curr;
+			ringEnd = Math.pow(ringSide, 2);
+			distanceToMiddle = Math.floor(ringSide / 2);
+
+			values = newValues;
+			newValues = [];
+			//console.log(values);
+		}
+
+		if (curr === 1)
+			newValues.push(1);
+
+		var str = '';
+		if (curr === ringEnd - 3*(ringSide - 1)) {
+			str = ' gore desno'
+		} else if (curr === ringEnd - 2*(ringSide - 1)) {
+			str = ' gore lijevo'
+		} else if (curr === ringEnd - (ringSide - 1)) {
+			str = ' dolje lijevo'
+		} else if (curr === ringEnd) {
+			str = ' dolje desno'
+		}
+
+		console.log(curr + str);
+
+		currentValue++;
+	}
+
+	return steps;
 }
 
 module.exports = {
 	part_one: part_one,
 	part_two: part_two
 }
-
-// function partTwo() {
-// 	var result = 0;
-
-// 	var curr = 0;
-// 	var ringIx = 0, ringMax = 1, ringSide = 1;
-
-// 	var distanceToMiddle = Math.floor(ringSide / 2);
-// 	while (curr < 50) {
-// 		curr++;
-// 		console.log(curr);
-// 		if (curr > ringMax) {
-// 			ringIx++;
-// 			ringSide = (2 * ringIx) + 1;
-// 			distanceToMiddle = Math.floor(ringSide / 2);
-// 			ringMax = Math.pow(ringSide, 2);
-// 			console.log(`Switched to ring ${ringIx} with max ${ringMax} and ring side ${ringSide}, ${distanceToMiddle}`)
-// 		}
-// 	}
-
-// 	console.log("Part 2 result value is " + result)
-// }
