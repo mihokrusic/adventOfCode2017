@@ -1,8 +1,8 @@
 const parseInput = (input) => {
-	var parsed = input.trim().replace(/\n/g, "*").split("*");
-	for (var i = 0; i < parsed.length; i++) {
-		parsed[i] = parsed[i].trim().replace(/\t/g, "*").split("*").map(Number);
-	}
+	var parsed = input
+		.trim()
+		.split(/\n/)
+		.map((item) => item.trim().split(/\t/).map(Number));
 	return parsed;
 };
 
