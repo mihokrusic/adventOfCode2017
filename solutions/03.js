@@ -21,51 +21,71 @@ const part_one = (input) => {
 	steps = Math.abs(input - middle) + groupIx;
 
 	return steps;
-}
+};
+
+const getSum = (currentPos, spiral) => {
+	var sum = 0;
+	for (var i = -1; i < 2; i++) {
+		for (var j = -1; j < 2; j++) {
+			if (currentPos.x + i > 0 && 
+				currentPos.x + i < spiral.length &&
+				currentPos.y + j > 0 &&
+				currentPos.y + i < spiral.length)
+				sum+=spiral[currentPos.x+i][currentPos.y+j];
+		}
+	}
+	return sum;
+};
 
 const part_two = (input) => {
 	var steps = 0;
+	var spiralDims = 70; // Really, not good
+	var spiralCenter = Math.floor(spiralDims / 2);
 
-	var ringIx = 0, ringStart = 0, ringEnd = 1, ringSide = 1, distanceToMiddle = 0;
-	var values = [], newValues = [];
+	var spiral = new Array(spiralDims);
+	for (var i = 0; i < spiralDims; i++)
+		spiral[i] = new Array(spiralDims).fill(0);
 
-	var curr = 0;
-	var currentValue = 0;
-	while (currentValue < input) {
-		curr++;
-		if (curr > ringEnd) {
-			ringIx++;
-			ringSide = (2 * ringIx) + 1;
-			ringStart = curr;
-			ringEnd = Math.pow(ringSide, 2);
-			distanceToMiddle = Math.floor(ringSide / 2);
+	var currentPos = { x: spiralCenter, y: spiralCenter };
+	var movement = { x: 1, y: 0 };
+	var currentSquare = 1,
+		ring = 0, 
+		ringSide = (2 * ring + 1), 
+		ringMax = Math.pow(ringSide, 2),
+		lastSum = 0;
 
-			values = newValues;
-			newValues = [];
-			//console.log(values);
+	// init center value and loop until we find a sum larger than input
+	spiral[currentPos.x][currentPos.y] = 1;
+	while (lastSum < input) {
+		if (currentSquare !== 1) 
+			spiral[currentPos.x][currentPos.y] = getSum(currentPos, spiral);
+		lastSum = spiral[currentPos.x][currentPos.y];
+
+		// move cursor
+		currentPos.x += movement.x;
+		currentPos.y += movement.y;
+
+		// if new ring
+		currentSquare++;
+		if (currentSquare > ringMax) {
+			movement = { x: 0, y: 1 };
+			ring++;
+			ringSide = (2 * ring + 1); 
+			ringMax = Math.pow(ringSide, 2);
 		}
 
-		if (curr === 1)
-			newValues.push(1);
-
-		var str = '';
-		if (curr === ringEnd - 3*(ringSide - 1)) {
-			str = ' gore desno'
-		} else if (curr === ringEnd - 2*(ringSide - 1)) {
-			str = ' gore lijevo'
-		} else if (curr === ringEnd - (ringSide - 1)) {
-			str = ' dolje lijevo'
-		} else if (curr === ringEnd) {
-			str = ' dolje desno'
+		// if we are on a corner
+		if (currentSquare === ringMax - 3 * (ringSide - 1)) {
+			movement = { x: -1, y: 0 };
+		} else if (currentSquare === ringMax - 2 * (ringSide - 1)) {
+			movement = { x: 0, y: -1 };
+		} else if (currentSquare === ringMax - (ringSide - 1)) {
+			movement = { x: 1, y: 0 };
 		}
-
-		console.log(curr + str);
-
-		currentValue++;
 	}
 
-	return steps;
-}
+	return lastSum;
+};
 
 module.exports = {
 	part_one: part_one,
