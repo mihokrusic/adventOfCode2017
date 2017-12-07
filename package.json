@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Solution for Advent of Code 2017",
     "scripts": {
+        "run": "node run.js",
         "test": "mocha tests/*-test.js",
         "test01": "mocha tests/01-test.js",
         "test02": "mocha tests/02-test.js",
@@ -35,5 +36,8 @@
     "homepage": "https://github.com/mihokrusic/adventOfCode2017#readme",
     "devDependencies": {
         "mocha": "^4.0.1"
+    },
+    "dependencies": {
+        "lodash": "^4.17.4"
     }
 }
