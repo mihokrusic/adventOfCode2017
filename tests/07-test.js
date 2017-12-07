@@ -1444,8 +1444,8 @@ describe('Day 7', () => {
 		it('test input', 	() => assert.equal('ykpsek', day07.part_one(test)));
 	});
 
-	// describe('Part 2', () => {
-	// 	it('sample input', 	() => assert.equal(4, day06.part_two('0	2	7	0')));
-	// 	it('test input', 	() => assert.equal(1610, day06.part_two('2	8	8	5	4	2	3	1	5	5	1	2	15	13	5	14')));
-	// });
+	describe('Part 2', () => {
+		// it('sample input', 	() => assert.equal('tknk', day07.part_two(sample)));
+		// it('test input', 	() => assert.equal('ykpsek', day07.part_two(test)));
+	});
 });

@@ -1,5 +1,3 @@
-const _ = require("lodash");
-
 const parseInput = (input) => {
 	return input
 		.trim()
@@ -12,10 +10,10 @@ const parseInput = (input) => {
 		.map((item) => item.split('|'));
 }
 
-const getParent = (trunks, child) => {
-	for (var i = 0; i < trunks.length; i++) {
-		if (trunks[i].children.indexOf(child) > -1)
-			return getParent(trunks, trunks[i].name);
+const getParent = (objects, child) => {
+	for (var i = 0; i < objects.length; i++) {
+		if (objects[i].children.indexOf(child) > -1)
+			return getParent(objects, objects[i].name);
 	}
 	return child;
 }
@@ -39,9 +37,7 @@ const solution = (part1, input) => {
 		objects.push(object);
 	}
 
-	var trunks = _.filter(objects, (obj) => obj.children.length > 0);
-
-	var head = getParent(trunks, trunks[0].name);
+	var head = getParent(objects, objects[0].name);
 	return head;
 }
 
