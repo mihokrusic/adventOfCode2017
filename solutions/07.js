@@ -70,8 +70,30 @@ const getUnbalancedNode = (objects, currentIx) => {
 		return true;
 
 	if (object.totalChildrenWeights % object.childrenWeights[0] !== 0) {
-		console.log(object.name, object.children);
-		console.log(object.name, object.childrenWeights);
+		var uniqueWeights = object.childrenWeights.filter(function(item, pos) {
+		    return object.childrenWeights.indexOf(item) == pos;
+		});
+		for (var i = 0; i < uniqueWeights.length; i++) {
+			var count = 0, uniqueIx = -1;
+			for (var j = 0; j < object.childrenWeights.length; j++) {
+				if (object.childrenWeights[j] === uniqueWeights[i]) {
+					count++;
+					if (count === 1)
+						uniqueIx = j;
+					if (count > 1)
+						break;
+				}
+			}
+			if (count === 1) {
+				break;
+			}
+		}
+		if (uniqueIx > -1) {
+			var uniqueObjectIx = getByName(objects, object.children[uniqueIx]);
+			var difference = Math.abs(uniqueWeights[0] - uniqueWeights[1]);
+			var result = objects[uniqueObjectIx].weight - difference;
+			console.log(result);
+		}
 	}
 
 	for (var i = 0; i < object.children.length; i++) {
