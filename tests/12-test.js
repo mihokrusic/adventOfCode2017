@@ -2023,7 +2023,7 @@ describe('Day 12', () => {
 	});
 
 	describe('Part 2', () => {
-		// it('sample', 	() => assert.equal(6, day12.part_one(sample)));
-		// it('test', 		() => assert.equal(145, day12.part_one(test)));
+		it('sample', 	() => assert.equal(2, day12.part_two(sample)));
+		it('test', 		() => assert.equal(207, day12.part_two(test)));
 	});
 });

@@ -1,5 +1,7 @@
-const parseInput = (input) => {
-	var parsed = input
+var input;
+
+const parseInput = (raw) => {
+	var parsed = raw
 		.trim()
 		.replace(/ /g, '')
 		.replace(/<->/g, '|')
@@ -10,7 +12,7 @@ const parseInput = (input) => {
 	return parsed;
 };
 
-const getProgramFromInput = (id, input) => {
+const getProgramFromInput = (id) => {
 	for (var i = 0; i < input.length; i++) {
 		if (input[i][0] === id)
 			return input[i];
@@ -19,12 +21,15 @@ const getProgramFromInput = (id, input) => {
 	return false;
 };
 
-const generateProgramTree = (current, input) => {
+const generateProgramTree = (current, visitedPrograms) => {
 	var visited = current.visited.slice(0);
 	visited.push(current.id);
 
-	var program = getProgramFromInput(current.id, input);
+	var program = getProgramFromInput(current.id);
 	program = program.filter((elem, index) => visited.indexOf(elem) === -1);
+
+	if (visitedPrograms && visitedPrograms.indexOf(current.id))
+		visitedPrograms.push(current.id);
 
 	for (var i = 0; i < program.length; i++) {
 		current.children.push({
@@ -32,7 +37,7 @@ const generateProgramTree = (current, input) => {
 			children: [],
 			visited: visited
 		});
-		generateProgramTree(current.children[i], input);
+		generateProgramTree(current.children[i], visitedPrograms);
 	}
 };
 
@@ -48,13 +53,13 @@ const getUniquePrograms = (current, uniquePrograms) => {
 	}
 };
 
-const part_one = (input) => {
+const part_one = (raw) => {
 	var numberOfPrograms = 0;
-	var parsedInput = parseInput(input);
+	input = parseInput(raw);
 
 	var programs = { id: 0, children: [], visited: [] }
 
-	generateProgramTree(programs, parsedInput);
+	generateProgramTree(programs);
 
 	var uniquePrograms = [];
 	getUniquePrograms(programs, uniquePrograms);
@@ -62,16 +67,27 @@ const part_one = (input) => {
 	return uniquePrograms.length;
 };
 
-const part_two = (input) => {
+const part_two = (raw) => {
 	var numberOfPrograms = 0;
-	var parsedInput = parseInput(input);	
+	input = parseInput(raw);
 
-	var groups = [{ id: 0, children: [], visited: [] }];
+	var groups = [];
 	var visitedPrograms = [];
 
-	
+	var programsInput = input.slice(0).filter((elem) => (visitedPrograms.indexOf(elem[0]) === -1));
+	while (programsInput.length > 0) {
+		groups.push({
+			id: programsInput[0][0],
+			children: [],
+			visited: []
+		});
 
-	return 0;
+		generateProgramTree(groups[groups.length - 1], visitedPrograms);
+
+		programsInput = input.slice(0).filter((elem) => (visitedPrograms.indexOf(elem[0]) === -1));
+	}
+
+	return groups.length;
 };
 
 module.exports = {
