@@ -26,7 +26,6 @@ const generateProgramTree = (current, input) => {
 	var program = getProgramFromInput(current.id, input);
 	program = program.filter((elem, index) => visited.indexOf(elem) === -1);
 
-
 	for (var i = 0; i < program.length; i++) {
 		current.children.push({
 			id: program[i],
@@ -64,6 +63,14 @@ const part_one = (input) => {
 };
 
 const part_two = (input) => {
+	var numberOfPrograms = 0;
+	var parsedInput = parseInput(input);	
+
+	var groups = [{ id: 0, children: [], visited: [] }];
+	var visitedPrograms = [];
+
+	
+
 	return 0;
 };
 
