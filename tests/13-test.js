@@ -64,7 +64,7 @@ describe('Day 13', () => {
 	});
 
 	describe('Part 2', () => {
-		// it('sample', 	() => assert.equal(2, day13.part_two(sample)));
-		// it('test', 		() => assert.equal(207, day13.part_two(test)));
+		it('sample', 	() => assert.equal(10, day13.part_two(sample)));
+		it('test', 		() => assert.equal(3873662, day13.part_two(test)));
 	});
 });

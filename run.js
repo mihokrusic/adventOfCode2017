@@ -54,5 +54,5 @@ var test = `
 96: 18
 `;
 
-day13.part_one(sample);
-day13.part_one(test);
+//day13.part_two(sample, true);
+console.log(day13.part_two(test, true));
