@@ -1,5 +1,4 @@
 var commands;
-var cache = [];
 
 const parseInput = (raw) => {
 	var parsed = raw
@@ -33,13 +32,13 @@ const parseInput = (raw) => {
 	return parsed;
 };
 
-const findProgramIndex = (programs, program) => {
+const getPrograms = (numberOfPrograms) => {
+	var programs = new Array(numberOfPrograms);
 	for (var i = 0; i < programs.length; i++) {
-		if (programs[i] === program)
-			return i;
+		programs[i] = String.fromCharCode(97 + i);
 	}
-	return -1;
-}
+	return programs;
+};
 
 const doSpin = (programs, places) => {
 	var programsToSpin = programs.slice(programs.length - places);
@@ -55,13 +54,6 @@ const doExchange = (programs, from, to) => {
 	programs[place2] = temp;
 };
 
-const doPartner = (programs, from, to) => {
-	var place1 = findProgramIndex(programs, from);
-	var place2 = findProgramIndex(programs, to);
-
-	doExchange(programs, place1, place2);
-};
-
 const doDance = (programs, commands) => {
 	for (var i = 0; i < commands.length; i++) {
 		switch (commands[i].command) {
@@ -72,7 +64,9 @@ const doDance = (programs, commands) => {
 				doExchange(programs, commands[i].from, commands[i].to);
 				break;
 			case 'partner':
-				doPartner(programs, commands[i].from, commands[i].to);
+				var from = programs.indexOf(commands[i].from);
+				var to = programs.indexOf(commands[i].to);
+				doExchange(programs, from, to);
 				break;
 		}
 	}
@@ -82,34 +76,38 @@ const doDance = (programs, commands) => {
 
 const part_one = (numberOfPrograms, raw) => {
 	var commands = parseInput(raw);
-	var programs = new Array(numberOfPrograms);
-	for (var i = 0; i < programs.length; i++) {
-		programs[i] = String.fromCharCode(97 + i);
-	}
+	var programs = getPrograms(numberOfPrograms);
 
 	var result = doDance(programs, commands);
 	return result.join('');
 };
 
 const part_two = (numberOfPrograms, raw) => {
-	var commands = parseInput(raw);
-	var programs = new Array(numberOfPrograms);
-	for (var i = 0; i < programs.length; i++) {
-		programs[i] = String.fromCharCode(97 + i);
-	}
 
-	console.time("partTwo");
-	var before, after;
-	for (var i = 0; i < 1000000000; i++) {
+	var cacheBefore = [],
+		cacheAfter = [],
+		commands = parseInput(raw),
+		programs = getPrograms(numberOfPrograms),
+		iterations = 1000000000;
+
+	for (var i = 0; i < iterations; i++) {
+
 		before = programs.join('');
-		if (i % 1000 === 0)
-			console.log((i / 1000000000 * 100).toFixed(2));
+		var cacheIx = cacheBefore.indexOf(before)
+		if (cacheIx !== -1) {
 
-		programs = doDance(programs, commands);
-		after = programs.join('');
+			var group = i - cacheIx;
+			var remainder = (iterations - 1) - i;
+			var finalPosition = cacheIx + (remainder % group);
+
+			programs = cacheAfter[finalPosition].split('');
+			break;
+		}
 		
+		programs = doDance(programs, commands);
+		cacheBefore.push(before);
+		cacheAfter.push(programs.join(''));
 	}
-	console.timeEnd("partTwo");
 
 	return programs.join('');
 };

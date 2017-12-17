@@ -18,7 +18,7 @@ describe('Day 16', () => {
 	});
 
 	describe('Part 2', () => {
-		//it('sample', 	() => assert.equal('baedc', day16.part_two(5, sample)));
-		//it('test', 		() => assert.equal('', day16.part_two(16, test)));
+		it('sample', 	() => assert.equal('abcde', day16.part_two(5, sample)));
+		it('test', 		() => assert.equal('fbidepghmjklcnoa', day16.part_two(16, test)));
 	});
 });
