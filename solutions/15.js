@@ -54,7 +54,7 @@ const loopCommandsPart1 = (input) => {
 			if (registers[command[1]] !== 0 && lastSoundFrequency !== 0)
 				return lastSoundFrequency;
 		if (command[0] === 'jgz') {
-			var jumpTest = getValue(command[1], programs[currentProgram].registers)
+			var jumpTest = getValue(command[1], registers)
 			if (jumpTest > 0) {
 				advance = false;
 				i += getValue(command[2], registers);;
@@ -70,78 +70,77 @@ const loopCommandsPart2 = (input) => {
 
 	var programs = {
 		'a': {
-			registers: { p: 0 },
-			status: 'running',
-			cache: [],
-			pos: 0,
-			sentCount: 0
+			registers: { p: 0 }, status: 'running', cache: [], pos: 0, sentCount: 0
 		},
 		'b': {
-			registers: { p: 1 },
-			status: 'running',
-			cache: [],
-			pos: 0,
-			sentCount: 0
+			registers: { p: 1 }, status: 'running', cache: [], pos: 0, sentCount: 0
 		},
 
 	}
 
 	var command, advance;
-	var currentProgram = 'a', otherProgram = 'b';
+	var current = 'a', other = 'b';
+	var currentProgram = programs[current];
+	var otherProgram = programs[other];
 
 	while (true) {
-		if (programs[currentProgram].status === 'running' || (programs[currentProgram].status === 'waiting' && programs[currentProgram].cache.length > 0)) {
+		if (currentProgram.status === 'running' || (currentProgram.status === 'waiting' && currentProgram.cache.length > 0)) {
 			advance = true;
-			command = input[programs[currentProgram].pos];
+			command = input[currentProgram.pos];
 			switch (command[0]) {
 				case "set":
-			    	set(command[1], command[2], programs[currentProgram].registers);
+			    	set(command[1], command[2], currentProgram.registers);
 					break;
 				case "add":
-					add(command, programs[currentProgram].registers);
+					add(command, currentProgram.registers);
 					break;
 				case "mul":
-					mul(command, programs[currentProgram].registers);
+					mul(command, currentProgram.registers);
 					break;
 				case "mod":
-					mod(command, programs[currentProgram].registers);
+					mod(command, currentProgram.registers);
 					break;
 				case "snd":
-					programs[otherProgram].cache.push(getValue(command[1], programs[currentProgram].registers));
-					programs[currentProgram].sentCount++;
+					otherProgram.cache.push(getValue(command[1], currentProgram.registers));
+					currentProgram.sentCount++;
 					break;
 				case "rcv":
-					if (programs[currentProgram].cache.length > 0) {
-						var cacheItem = programs[currentProgram].cache.shift();
-			    		set(command[1], cacheItem, programs[currentProgram].registers);
-						programs[currentProgram].status = 'running';
+					if (currentProgram.cache.length > 0) {
+						var cacheItem = currentProgram.cache.shift();
+			    		set(command[1], cacheItem, currentProgram.registers);
+						currentProgram.status = 'running';
 					} else {
-						programs[currentProgram].status = 'waiting';
+						currentProgram.status = 'waiting';
 					}
 					break;
 				case "jgz":
-				    var jumpTest = getValue(command[1], programs[currentProgram].registers)
+				    var jumpTest = getValue(command[1], currentProgram.registers)
 					if (jumpTest > 0) {
 						advance = false;
-						programs[currentProgram].pos += getValue(command[2], programs[currentProgram].registers);;
+						currentProgram.pos += getValue(command[2], currentProgram.registers);;
 					}
 					break;
 			}
 
-			if (programs[currentProgram].status === 'running' && advance)
-				programs[currentProgram].pos++;
+			if (currentProgram.status === 'running' && advance)
+				currentProgram.pos++;
 
-			if (programs[currentProgram].pos < 0 || programs[currentProgram].pos >= input.length)
-				programs[currentProgram].status = 'terminated';
+			if (currentProgram.pos < 0 || currentProgram.pos >= input.length)
+				currentProgram.status = 'terminated';
 		}
 
-		if (programs[currentProgram].status !== 'running') {
-			currentProgram = (currentProgram === 'a' ? 'b' : 'a');
-			otherProgram = (currentProgram === 'a' ? 'b' : 'a');
+		if (currentProgram.status !== 'running') {
+			current = (current === 'a' ? 'b' : 'a');
+			other = (current === 'a' ? 'b' : 'a');
+			currentProgram = programs[current];
+			otherProgram = programs[other];
 		}
 
 		if (programs['a'].status === 'waiting' && programs['a'].cache.length === 0 &&
 			programs['b'].status === 'waiting' && programs['b'].cache.length === 0) {
+			break;
+		}
+		if (programs['a'].status === 'terminated' && programs['b'].status === 'terminated') {
 			break;
 		}
 	}
