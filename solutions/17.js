@@ -19,8 +19,26 @@ const part_one = (steps, loops) => {
 	return states[(newPosition + 2) % states.length];
 };
 
-const part_two = (steps) => {
-	return 0;
+const part_two = (steps, loops) => {
+	var afterZero = 0;
+	var numberOfElements = 1;
+	var currentPos = 0, newPosition = 0;
+	for (var i = 0; i < loops; i++) {
+		var steps2 = steps % numberOfElements;
+		newPosition = (currentPos + steps2) % numberOfElements;
+		
+		if (newPosition === numberOfElements) {
+			currentPos = numberOfElements;
+		} else {
+			currentPos = newPosition + 1;
+		}		
+		numberOfElements++;
+
+		if (currentPos === 1)
+			afterZero = i + 1;
+	}
+
+	return afterZero;
 };
 
 module.exports = {

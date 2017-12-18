@@ -10,6 +10,6 @@ describe('Day 17', () => {
 	});
 
 	describe('Part 2', () => {
-		it('test', 		() => assert.equal(1914, day17.part_two(343, 50000000)));
+		it('test', 		() => assert.equal(41797835, day17.part_two(343, 50000000)));
 	});
 });
