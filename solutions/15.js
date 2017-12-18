@@ -53,63 +53,16 @@ const loopCommandsPart1 = (input) => {
 		if (command[0] === 'rcv')
 			if (registers[command[1]] !== 0 && lastSoundFrequency !== 0)
 				return lastSoundFrequency;
-		if (command[0] === 'jgz')
-			if (registers[command[1]] !== 0) {
+		if (command[0] === 'jgz') {
+			var jumpTest = getValue(command[1], programs[currentProgram].registers)
+			if (jumpTest > 0) {
 				advance = false;
 				i += getValue(command[2], registers);;
 			}
+		}
 
 		if (advance)
 			i++;
-	}
-};
-
-const doProgram = (input, registers, status, queue, otherQueue, pos, sentCount) => {
-	if (status === 'running' || (status === 'waiting' && queue.length > 0)) {
-		advance = true;
-		command = input[pos];
-		console.log('A', command, status, pos);
-		switch (command[0]) {
-			case "set":
-		    	set(command[1], command[2], registers);
-				break;
-			case "add":
-				add(command, registers);
-				break;
-			case "mul":
-				mul(command, registers);
-				break;
-			case "mod":
-				mod(command, registers);
-				break;
-			case "snd":
-				otherQueue.push(getValue(command[1], registers));
-				sentCount++;
-				break;
-			case "rcv":
-				if (queue.length > 0) {
-					var cacheItem = queue.shift();
-		    		set(command[1], cacheItem, registers);
-					status = 'running';
-				} else {
-					status = 'waiting';
-				}
-				break;
-			case "jgz":
-				if (registers[command[1]] !== 0) {
-					advance = false;
-					pos += getValue(command[2], registers);;
-				}
-				break;
-		}
-
-		if (status === 'running' && advance)
-			pos++;
-
-		if (pos < 0 || pos >= input.length)
-			status = 'terminated';
-
-		console.log(pos, status, input.length);
 	}
 };
 
@@ -134,15 +87,9 @@ const loopCommandsPart2 = (input) => {
 	}
 
 	var command, advance;
-	var currentProgram = 'a';
+	var currentProgram = 'a', otherProgram = 'b';
 
-	while (programs['a'].status !== 'terminated' || programs['b'].status !== 'terminated') {
-
-		if (programs[currentProgram].status !== 'running') {
-			currentProgram = (currentProgram === 'a' ? 'b' : 'a');
-		}
-
-		// Do A
+	while (true) {
 		if (programs[currentProgram].status === 'running' || (programs[currentProgram].status === 'waiting' && programs[currentProgram].cache.length > 0)) {
 			advance = true;
 			command = input[programs[currentProgram].pos];
@@ -160,7 +107,7 @@ const loopCommandsPart2 = (input) => {
 					mod(command, programs[currentProgram].registers);
 					break;
 				case "snd":
-					programs['b'].cache.push(getValue(command[1], programs[currentProgram].registers));
+					programs[otherProgram].cache.push(getValue(command[1], programs[currentProgram].registers));
 					programs[currentProgram].sentCount++;
 					break;
 				case "rcv":
@@ -173,7 +120,8 @@ const loopCommandsPart2 = (input) => {
 					}
 					break;
 				case "jgz":
-					if (programs[currentProgram].registers[command[1]] !== 0) {
+				    var jumpTest = getValue(command[1], programs[currentProgram].registers)
+					if (jumpTest > 0) {
 						advance = false;
 						programs[currentProgram].pos += getValue(command[2], programs[currentProgram].registers);;
 					}
@@ -185,17 +133,20 @@ const loopCommandsPart2 = (input) => {
 
 			if (programs[currentProgram].pos < 0 || programs[currentProgram].pos >= input.length)
 				programs[currentProgram].status = 'terminated';
-
-			console.log(currentProgram, programs[currentProgram].status, programs[currentProgram].pos, command);
 		}
 
-		if (['waiting', 'terminated'].indexOf(programs['a'].status) > -1 && ['waiting', 'terminated'].indexOf(programs['b'].status) > -1) {
-			programs['a'].status = 'terminated';
-			programs['b'].status = 'terminated';
+		if (programs[currentProgram].status !== 'running') {
+			currentProgram = (currentProgram === 'a' ? 'b' : 'a');
+			otherProgram = (currentProgram === 'a' ? 'b' : 'a');
+		}
+
+		if (programs['a'].status === 'waiting' && programs['a'].cache.length === 0 &&
+			programs['b'].status === 'waiting' && programs['b'].cache.length === 0) {
+			break;
 		}
 	}
 
-	return programs['a'].sentCount;
+	return programs['b'].sentCount;
 };
 
 const part_one = (raw) => {
