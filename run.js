@@ -1,3 +1,10 @@
-const day17 = require('./solutions/17.js');
-console.log(day17.part_two(343, 50000000));
-console.log(day17.part_two(3, 2));
+const day19 = require('./solutions/19.js');
+
+
+var input = `     |
+     |  +--+
+     A  |  C
+ F---|----E|--+
+     |  |  |  D
+     +B-+  +--+`;
+console.log(day19.part_one(input));

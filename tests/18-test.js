@@ -1,8 +1,8 @@
 const assert = require('assert');
 
-const day15 = require('../solutions/15.js');
+const day18 = require('../solutions/18.js');
 
-describe('Day 15', () => {
+describe('Day 18', () => {
 
 	var sample = `
 		set a 1
@@ -116,12 +116,12 @@ describe('Day 15', () => {
 	`;
 
 	describe('Part 1', () => {
-		it('sample', 	() => assert.equal(4, day15.part_one(sample)));
-		it('test', 		() => assert.equal(1187, day15.part_one(test)));
+		it('sample', 	() => assert.equal(4, day18.part_one(sample)));
+		it('test', 		() => assert.equal(1187, day18.part_one(test)));
 	});
 
 	describe('Part 2', () => {
-		it('sample', 	() => assert.equal(3, day15.part_two(sample2)));
-		it('test', 		() => assert.equal(5969, day15.part_two(test2)));
+		it('sample', 	() => assert.equal(3, day18.part_two(sample2)));
+		it('test', 		() => assert.equal(5969, day18.part_two(test2)));
 	});
 });
