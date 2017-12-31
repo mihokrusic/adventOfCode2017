@@ -55,7 +55,7 @@ const part_one = (raw, iterations) => {
 	for (var i = 0; i < iterations; i++) {
 		var groups = breakPixels(pixels);
 
-		// Dijelimo pixele ne grupe zavisno jesu djejivi sa 3 ili 4
+		// Dijelimo pixele ne grupe zavisno jesu djeljivi sa 2 ili 3
 		// Grupu u string, ako postoji pravilo primjenjujemo
 		// Grupu rotiramo 3 puta, svaki put provjeravamo pravila
 		// Grupu mirror, provjeravamo pravilo
