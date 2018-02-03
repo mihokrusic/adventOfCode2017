@@ -5,9 +5,16 @@ const day = require('../solutions/' + dayNumber + '.js');
 
 describe('Day ' + dayNumber, () => {
 
-	var sample = `
+	var samplePart1 = `
 		p=< 3,0,0>, v=< 2,0,0>, a=<-1,0,0>
 		p=< 4,0,0>, v=< 0,0,0>, a=<-2,0,0>
+		`;
+
+	var samplePart2 = `
+		p=<-6,0,0>, v=< 3,0,0>, a=< 0,0,0>
+		p=<-4,0,0>, v=< 2,0,0>, a=< 0,0,0>
+		p=<-2,0,0>, v=< 1,0,0>, a=< 0,0,0>
+		p=< 3,0,0>, v=<-1,0,0>, a=< 0,0,0>
 		`;
 
 	var test = `
@@ -1014,10 +1021,16 @@ describe('Day ' + dayNumber, () => {
 		`;
 
 	describe('Part 1', () => {
-		it('sample', 	() => assert.equal(0, day.part_one(sample)));
+		it('sample', 	() => assert.equal(0, day.part_one(samplePart1)));
 		it('test', 		() => assert.equal(376, day.part_one(test)));
 	});
 
 	describe('Part 2', () => {
+		it('sample', 	() => assert.equal(1, day.part_two(samplePart2)));
+		it('test', function(done) {
+			this.timeout(360000);
+			assert.equal(574, day.part_two(test))
+			done();
+		});
 	});
 });
