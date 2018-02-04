@@ -45,6 +45,6 @@ describe('Day ' + dayNumber, () => {
 	});
 
 	describe('Part 2', () => {
-		//it('test', 		() => assert.equal(17264, day.part_two(test)));
+		it('test', 		() => assert.equal(903, day.part_two(test)));
 	});
 });

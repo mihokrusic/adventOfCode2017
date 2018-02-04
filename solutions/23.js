@@ -59,8 +59,25 @@ const part_one = (raw) => {
 	return mulUsed;
 };
 
+const isPrime = (num) => {
+  for (let i = 2; i < num; i++)
+    if (num % i === 0)
+    	return false;
+
+  return (num !== 1);
+}
+
 const part_two = (raw) => {
-	return 0;
+	var b = 108400;
+	var i = 0, h = 0;
+	while (i < 1001) {
+		if (!isPrime(b))
+			h++;
+
+		b += 17;
+		i++;
+	}
+	return h;
 };
 
 module.exports = {
