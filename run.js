@@ -1,39 +1,61 @@
-const dayNumber = '23';
+const dayNumber = '24';
 const day = require('./solutions/' + dayNumber + '.js');
 
 var test = `
-	set b 84
-	set c b
-	jnz a 2
-	jnz 1 5
-	mul b 100
-	sub b -100000
-	set c b
-	sub c -17000
-	set f 1
-	set d 2
-	set e 2
-	set g d
-	mul g e
-	sub g b
-	jnz g 2
-	set f 0
-	sub e -1
-	set g e
-	sub g b
-	jnz g -8
-	sub d -1
-	set g d
-	sub g b
-	jnz g -13
-	jnz f 2
-	sub h -1
-	set g b
-	sub g c
-	jnz g 2
-	jnz 1 3
-	sub b -17
-	jnz 1 -23
+		48/5
+		25/10
+		35/49
+		34/41
+		35/35
+		47/35
+		34/46
+		47/23
+		28/8
+		27/21
+		40/11
+		22/50
+		48/42
+		38/17
+		50/33
+		13/13
+		22/33
+		17/29
+		50/0
+		20/47
+		28/0
+		42/4
+		46/22
+		19/35
+		17/22
+		33/37
+		47/7
+		35/20
+		8/36
+		24/34
+		6/7
+		7/43
+		45/37
+		21/31
+		37/26
+		16/5
+		11/14
+		7/23
+		2/23
+		3/25
+		20/20
+		18/20
+		19/34
+		25/46
+		41/24
+		0/33
+		3/7
+		49/38
+		47/22
+		44/15
+		24/21
+		10/35
+		6/21
+		14/50
 `;
 
-day.part_two(test);
+console.log(day.part_two(test));
