@@ -45,6 +45,16 @@ describe('Day ' + dayNumber, () => {
 	});
 
 	describe('Part 2', () => {
-		//it('test', 		() => assert.equal(17264, day.part_two(test)));
+		it('test - 100', 		() => assert.equal(26, day.part_two(test, 100)));
+		it('test - 10000000', function(done) {
+			this.timeout(360000);
+			assert.equal(2511944, day.part_two(test, 10000000))
+			done();
+		});
+		it('real - 10000000', function(done) {
+			this.timeout(360000);
+			assert.equal(2512017, day.part_two(real, 10000000))
+			done();
+		});
 	});
 });

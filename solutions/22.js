@@ -1,6 +1,3 @@
-const ARRAY_DIMS = 1001;
-const ARRAY_MID = Math.floor(ARRAY_DIMS / 2);
-
 const parseInput = (raw) => {
 	var parsed = raw
 		.trim()
@@ -11,77 +8,112 @@ const parseInput = (raw) => {
 };
 
 const initMap = (input) => {
-
-	var map = new Array(ARRAY_DIMS);
-	for (var i = 0; i < map.length; i++) {
-		map[i] = Array.apply(null, Array(ARRAY_DIMS)).map(String.prototype.valueOf, ".")
-	}
-
-	var inputDims = input.length;
+	var map = {};
+	var mid = Math.floor(input.length / 2);
+	var pos;
 	for (var i = 0; i < input.length; i++) {
 		for (var j = 0; j < input[i].length; j++) {
-			var mapX = Math.floor((ARRAY_DIMS - inputDims) / 2) + i;
-			var mapY = Math.floor((ARRAY_DIMS - inputDims) / 2) + j;
-			map[mapX][mapY] = input[i][j];
+			if (input[i][j] === '.')
+				continue;
+
+			pos = getMapKey(mid - i, j - mid);
+			map[pos] = input[i][j];
 		}
 	}
 	return map;
 };
 
-const printMap = (map) => {
-	console.log("Map:");
-	for (var i = 0; i < map.length; i++) {
-		var row = '';
-		for (var j = 0; j < map[i].length; j++) {
-			row += map[i][j];
-		}
-		console.log(row);
+const getMapKey = (x, y) => {
+	return y + '|' + x;
+};
+
+const move = (pos, direction) => {
+	switch (direction) {
+		case 0:
+			pos.y++;
+			break;
+		case 1:
+			pos.x++;
+			break;
+		case 2:
+			pos.y--;
+			break;
+		case 3:
+			pos.x--;
+			break;
 	}
+	return pos;
 };
 
 const part_one = (raw, bursts) => {
-
 	var input = parseInput(raw);
 	var map = initMap(input);
 
-	var pos = {
-		x: ARRAY_MID,
-		y: ARRAY_MID,
-		direction: 0 // 0 up, 1 right, 2 down, 3 left
-	};
+	var pos = { x: 0, y: 0 };
+	var direction = 0; // 0 up, 1 right, 2 down, 3 left
 	var infections = 0;
 
 	for (var i = 0; i < bursts; i++) {
-		if (map[pos.y][pos.x] === '.') {
-			pos.direction = ((pos.direction - 1 + 4) % 4);
-			map[pos.y][pos.x] = '#';
+		var currentPos = getMapKey(pos.y, pos.x);
+		if (typeof map[currentPos] === 'undefined') {
+			map[currentPos] = '.';
+		}
+
+		if (map[currentPos] === '.') {
+			direction = (direction - 1 + 4) % 4;
+			map[currentPos] = '#';
 			infections++;
 		} else {
-			pos.direction = ((pos.direction + 1) % 4);
-			map[pos.y][pos.x] = '.';
+			direction = (direction + 1) % 4;
+			map[currentPos] = '.';
 		}
-		switch (pos.direction) {
-			case 0:
-				pos.y--;
-				break;
-			case 1:
-				pos.x++;
-				break;
-			case 2:
-				pos.y++;
-				break;
-			case 3:
-				pos.x--;
-				break;
-		}
+
+		pos = move(pos, direction);
 	}
 
-	// printMap(map);
 	return infections;
 };
 
-const part_two = (raw) => {
-	return 0;
+const part_two = (raw, bursts) => {
+	var input = parseInput(raw);
+	var map = initMap(input);
+
+	var pos = { x: 0, y: 0 };
+	var direction = 0; // 0 up, 1 right, 2 down, 3 left
+	var infections = 0;
+
+	for (var i = 0; i < bursts; i++) {
+		var currentPos = getMapKey(pos.y, pos.x);
+		if (typeof map[currentPos] === 'undefined') {
+			map[currentPos] = '.';
+		}
+
+		var currentNode = map[currentPos];
+		var futureNode;
+		switch (currentNode) {
+			case '.':
+				futureNode = 'W';
+				direction = (direction - 1 + 4) % 4;
+				break;
+			case 'W':
+				infections++;
+				futureNode = '#';
+				break;
+			case '#':
+				direction = (direction + 1) % 4;
+				futureNode = 'F';
+				break;
+			case 'F':
+				direction = (direction - 2 + 4) % 4;
+				futureNode = '.';
+				break;
+		}
+
+		pos = move(pos, direction);
+		map[currentPos] = futureNode;
+	}
+
+	return infections;
 };
 
 
